@@ -48,7 +48,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 echo 'Error:' . curl_error($ch);
             }
             curl_close ($ch);
-            
+            $GLOBALS['sc']  = json_decode($result,true)['settings']['sc'];
             $tanamiklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/tanam.php?userid='.json_decode($resultAwal,true)['userId'].'&devicetoken='.json_decode($resultAwal,true)['deviceToken'].'&clc='.json_decode($result,true)['clcode'].'&codesc='.json_decode($result,true)['settings']['sc'].'&command=insert');
             if(!empty(json_decode($result,true)['ad_size'])){
                 echo "\033[1;34m".json_decode($resultAwal,true)['userId']." | Sukses \033[0m \n";
