@@ -30,7 +30,6 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
 ',$listAkun);
         
         foreach($explode as $k){
-            echo explode('|',$k)[0]."<br>";
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_URL, "https://a.applovin.com/3.0/ad?accept=custom_size,launch_app,video&v4=true&api_did=".explode('|',$k)[3]."&zone_id=inter_videoa_direct&country_code=ID&sim=0&carrier=INDOSAT&preloading=false&idfa=".explode('|',$k)[2]."&wvvc=353806410&dy=1920&format=json&orientation_lock=portrait&adns=3.0&sdk_key=wT2o5DOKtwBs_nrNr8rVnBTkEGJV4Q_-v1m_F9J63Vz3GoQ6wFcgQ4PfKi9O89N1A80PHKWKqTN5FpCA2psTuF&gy=true&v1=true&brand_name=asus&sc=".$sc."&si=0&volume=66&dnt=false&dx=1080&locale=in_ID&revision=Z00A_1&ia=15406019".rand(00000,99999)."&li=".rand(1,99999999)."&adr=0&os=5.0&v3=true&tz_offset=7.0&network=wifi&platform=android&app_version=3.5.9&adnsd=480&build=103&installer_name=com.android.vending&brand=asus&sdk_version=8.1.4&v2=true&pnr=false&vz=1e89c69ab45abdfb&hardware=mofd_v1&model=ASUS_Z00AD");
