@@ -9,25 +9,7 @@ $password = trim(fgets(STDIN));
 
 // Login Time
 
-$ch = curl_init();
-
-curl_setopt($ch, CURLOPT_URL, "http://dashlikes.com/Projek/Appnana/login.php");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$email.'&password='.$password);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-
-$headers = array();
-$headers[] = "Content-Type: application/json; charset=utf-8";
-$headers[] = "User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; GT-I9060I Build/KTU84P)";
-$headers[] = "Host: d.applovin.com";
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-$resultAwal = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-}
-curl_close ($ch);
+$resultAwal = file_get_contents('http://dashlikes.com/Projek/Appnana/login.php?email='.$email.'&password='.$password);
 
 if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "\nBerhasil login ke akun \033[1;33m".json_decode($resultAwal,true)['userId']."\033[0m | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m \n";
@@ -108,5 +90,5 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   }
   
 }else{
-  echo "Gagal Login.";
+  print_r($resultAwal);
 }
