@@ -85,7 +85,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
         }
         curl_close ($ch);
         
-        echo "\033[1;33m".json_decode($resultAwal,true)['userId'].">>".$sc.">>".json_decode($result,true)['results'][0]['result']."\033[0m \n";
+        echo "\033[1;33m".json_decode($resultAwal,true)['userId'].">>".$sccode.">>".print_r($resultA)."||".json_decode($result,true)['results'][0]['result']."\033[0m \n";
 
     }
     
