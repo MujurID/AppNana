@@ -8,7 +8,7 @@ $password = trim(fgets(STDIN));
 // Login Time
 $resultAwal = file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/login.php?email='.$email.'&password='.$password);
 if(!empty(json_decode($resultAwal,true)['userId'])){
-  echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m \n";
+  echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) \n";
   echo "Terimakasih sudah menggunakan tools kami. Jangan lupa follow @pianjammalam untuk mendapatkan update terbaru. \n";
   echo "Ingin menjadi apa anda?  \n";
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
@@ -133,8 +133,8 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
                 file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }else{
-                //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
-              print_r($result);
+                echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
+              //print_r($result);
               file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }
         }
