@@ -19,9 +19,10 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   if(strtolower($option)    ==  'a'){
       echo "\nAnda berperan sebagai \033[1;33mplanter(penanam)\033[0m, bekerja untuk menanamkan semua iklan yang ada dari APPNANA(Applovin) sebagai akun yang terdaftar di database. Jadi kamu membantu semua user yang menggunakan tools ini untuk menanamkan iklan. \n Aplikasi akan mulai dalam 5 detik ... \n";
       sleep(5);
-      $listAkun =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/loginuserdata.php');
+      
       
       while(1){
+        $listAkun =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/loginuserdata.php');
           $explode    =   explode('
 ',$listAkun);
         
