@@ -86,6 +86,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Sudah di siram, di beri pupuk. Tinggal Lu panen cuk \033[0m \n";
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.explode('|',$k)[0].'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
             }else{
                 echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Kena hama coy:( Gagal Panen kita. \033[0m \n";
             }
@@ -99,7 +100,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       sleep(5);
       
       while(1){
-          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/tanamdata.php');
+          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/panendata.php');
           $explode    =   explode('
 ',$listIklan);
         
