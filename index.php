@@ -11,9 +11,9 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m \n";
   echo "Terimakasih sudah menggunakan tools kami. Jangan lupa follow @pianjammalam untuk mendapatkan update terbaru. \n";
   echo "Ingin menjadi apa anda?  \n";
-  echo "ketik \033[0;36ma\033[0m untuk berperan menjadi\033[0;36 planter(penanam)\033[0m \n";
-  echo "ketik \033[0;32mb\033[0m untuk berperan menjadi\033[0;32 treat(merawat)\033[0m \n";
-  echo "ketik \033[1;31mc\033[0m untuk berperan menjadi\033[1;31 harvesters(pemanen)\033[0m \n >>> ";
+  echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
+  echo "ketik \033[0;32mb\033[0m untuk berperan menjadi \033[0;32  treat(merawat)\033[0m \n";
+  echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n >>> ";
   $option = trim(fgets(STDIN));
   
   if(strtolower($option)    ==  'a'){
@@ -86,7 +86,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Sudah di siram, di beri pupuk. Tinggal Lu panen cuk \033[0m \n";
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.explode('|',$k)[0].'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.explode('|',$k)[1].'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
             }else{
                 echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Kena hama coy:( Gagal Panen kita. \033[0m \n";
             }
