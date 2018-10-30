@@ -14,6 +14,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
   echo "ketik \033[0;32mb\033[0m untuk berperan menjadi \033[0;32  treat(merawat)\033[0m \n";
   echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n >>> ";
+  echo "ketik \033[1;31md\033[0m untuk berperan menjadi \033[1;31  agricultural expert(ahli pertanian)\033[0m \n >>> ";
   $option = trim(fgets(STDIN));
   
   if(strtolower($option)    ==  'a'){
@@ -135,6 +136,54 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
                 file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }else{
+                echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
+              //print_r($result);
+              //echo $clcode." \n";
+              //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
+              //echo '\n'.explode('|',$k)[3]; 
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+            }
+        }
+      }
+      
+  
+  }else if(strtolower($option)    ==  'd'){
+      
+      
+      echo "\nAnda berperan sebagai\033[1;33m agricultural expert(ahli pertanian)\033[0m, bekerja untuk memeriksa tanaman tanaman yang di rawat oleh treat. Terkadang treat memberi pupuk terlalu sedikit maupun terlalu banyak, sehingga banyak tanaman(iklan) yang mati. \n Aplikasi akan mulai dalam 5 detik ... \n";
+      sleep(5);
+      
+      while(1){
+          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/panendata.php');
+          $explode    =   explode('
+',$listIklan);
+        
+        foreach($explode as $k){
+            $clcode =   explode('|',$k)[2];
+          
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+
+            $headers = array();
+            $headers[] = "Content-Type: application/json; charset=utf-8";
+            $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
+            $headers[] = "Host: d.applovin.com";
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                echo 'Error:' . curl_error($ch);
+            }
+            curl_close ($ch);
+            if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
+                echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
+                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+            }else{
                 //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
               //print_r($result);
               echo $clcode." \n";
@@ -145,6 +194,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
         }
       }
       
+  
   
   }
   
