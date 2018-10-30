@@ -114,7 +114,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
           
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token="..explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"15.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
             curl_setopt($ch, CURLOPT_POST, 1);
