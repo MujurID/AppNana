@@ -101,7 +101,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=MaznYs97JTiqaqEwnZGZ5sWF8XoG6dKjdbFQZwnQIOojzoI_OYk3-ffGUUxuxMb7trEt_0KG3bL5mwnKz1hy--oy_FsLvL7-Sr6hraq_7POC3gwyj5wdHcgQvtzlHemMXKIBQRWQuI1sIJ-lrDF4dbMiXLwC2O6k1RXvNCNfhgM=");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.explode('|',$k)[2].'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.$akun.'"}');
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -118,6 +118,14 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 echo 'Error:' . curl_error($ch);
             }
             curl_close ($ch);
+            
+            if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
+                echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+            }else{
+                echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
+                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+            }
         }
       }
       
