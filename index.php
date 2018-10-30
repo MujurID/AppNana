@@ -90,8 +90,10 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".$akun." >".explode('|',$k)[0]."< | Sudah di siram, di beri pupuk. Tinggal Lu panen cuk \033[0m \n";
               file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.$akun.'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
             }else{
                 echo "\033[31m Akun : ".$akun." >".explode('|',$k)[0]."< | Kena hama coy:( Gagal Panen kita. \033[0m \n";
+                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
             }
         }
       }
