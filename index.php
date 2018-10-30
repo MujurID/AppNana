@@ -136,7 +136,8 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }else{
                 //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
-              print_r($result);
+              //print_r($result);
+              echo $clcode." \n";
               //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
               //echo '\n'.explode('|',$k)[3]; 
               file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
