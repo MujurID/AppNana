@@ -13,8 +13,8 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "Ingin menjadi apa anda?  \n";
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
   echo "ketik \033[0;32mb\033[0m untuk berperan menjadi \033[0;32  treat(merawat)\033[0m \n";
-  echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n >>> ";
-  echo "ketik \033[1;31md\033[0m untuk berperan menjadi \033[1;31  agricultural expert(ahli pertanian)\033[0m \n >>> ";
+  //echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n >>> ";
+  //echo "ketik \033[1;31md\033[0m untuk berperan menjadi \033[1;31  agricultural expert(ahli pertanian)\033[0m \n >>> ";
   $option = trim(fgets(STDIN));
   
   if(strtolower($option)    ==  'a'){
