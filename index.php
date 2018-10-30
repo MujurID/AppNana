@@ -111,26 +111,26 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
         
         foreach($explode as $k){
             $clcode =   explode('|',$k)[2];
+          
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token="..explode('|',$k)[3]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"15.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-            
+
             $headers = array();
             $headers[] = "Content-Type: application/json; charset=utf-8";
             $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
             $headers[] = "Host: d.applovin.com";
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
+
             $result = curl_exec($ch);
             if (curl_errno($ch)) {
                 echo 'Error:' . curl_error($ch);
             }
             curl_close ($ch);
-            
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
                 file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
