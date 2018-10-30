@@ -13,8 +13,8 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "Ingin menjadi apa anda?  \n";
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
   echo "ketik \033[0;32mb\033[0m untuk berperan menjadi \033[0;32  treat(merawat)\033[0m \n";
-  echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n";
-  echo "ketik \033[1;33md\033[0m untuk berperan menjadi \033[1;31  agricultural expert(ahli pertanian)\033[0m \n >>> ";
+  echo "ketik \033[1;31mc\033[0m untuk berperan menjadi \033[1;31  harvesters(pemanen)\033[0m \n >>> ";
+  echo "ketik \033[1;31md\033[0m untuk berperan menjadi \033[1;31  agricultural expert(ahli pertanian)\033[0m \n >>> ";
   $option = trim(fgets(STDIN));
   
   if(strtolower($option)    ==  'a'){
@@ -96,6 +96,28 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
                 echo "\033[31m Akun : ".$akun." >".explode('|',$k)[0]."< | Kena hama coy:( Gagal Panen kita. \033[0m \n";
                 file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
             }
+            
+            sleep(1);
+            
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.explode('|',$k)[2].'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.$akun.'"}');
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+            
+            $headers = array();
+            $headers[] = "Content-Type: application/json; charset=utf-8";
+            $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
+            $headers[] = "Host: d.applovin.com";
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                echo 'Error:' . curl_error($ch);
+            }
+            curl_close ($ch);
         }
       }
       
@@ -159,39 +181,38 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
 ',$listIklan);
         
         foreach($explode as $k){
+            $clcode =   explode('|',$k)[2];
           
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/vr?device_token=".explode('|',$k)[3]);
+            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.explode('|',$k)[2].'","user_id":"'.explode('|',$k)[1].'","zone_id":"inter_videoa_direct"}');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-            
+
             $headers = array();
             $headers[] = "Content-Type: application/json; charset=utf-8";
             $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
             $headers[] = "Host: d.applovin.com";
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
+
             $result = curl_exec($ch);
             if (curl_errno($ch)) {
                 echo 'Error:' . curl_error($ch);
             }
             curl_close ($ch);
-          
-          $akun = explode('|',$k)[1];
-            
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
-                echo "\033[1;34m Akun : ".$akun." >".explode('|',$k)[0]."< | Sudah di cek oleh ahli pertanian. Berdoa aje kalo tanemannya idup tong! \033[0m \n";
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.$akun.'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+                echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
+                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }else{
-                echo "\033[31m Akun : ".$akun." >".explode('|',$k)[0]."< | Innalillahi, yang ini udah kena pestisida 2 liter:(. \033[0m \n";
-                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+                //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
+              //print_r($result);
+              echo $clcode." \n";
+              //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
+              //echo '\n'.explode('|',$k)[3]; 
+              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
             }
-        
-        
         }
       }
       
