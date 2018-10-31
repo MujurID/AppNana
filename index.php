@@ -7,7 +7,7 @@ echo "\033[1;36mMasukkan Password APPNANA : ";
 $password = trim(fgets(STDIN));
 // Login Time
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://dashlikes.com/Projek/Appnana/Proses/login.php");
+curl_setopt($ch, CURLOPT_URL, "http://dashlikes.com/Projek/Appnana/Proses/loginlain.php");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$email.'&password='.$password);
 curl_setopt($ch, CURLOPT_POST, 1);
