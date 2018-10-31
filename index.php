@@ -249,5 +249,6 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
   
   
 }else{
-    echo "\nGagal Login \n";
+    //echo "\nGagal Login \n";
+            print_r($resultAwal);
 }
