@@ -110,7 +110,7 @@ $deviceId   =   json_decode($resultAkhir,true)['results'][0]['device_id'];
 $vx =   json_decode($resultAkhir,true)['results'][0]['vx'];
 $deviceToken    =   json_decode($resultAkhir,true)['results'][0]['device_token'];
 $appId  =   json_decode($resultAkhir,true)['results'][0]['app_id'];
-$nanasMy    =   json_decode($result,true)['response']['nanas']
+$nanasMy    =   json_decode($result,true)['response']['nanas'];
 
 $ch = curl_init();
 
