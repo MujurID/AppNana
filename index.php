@@ -6,28 +6,111 @@ $email = trim(fgets(STDIN));
 echo "\033[1;36mMasukkan Password APPNANA : ";
 $password = trim(fgets(STDIN));
 // Login Time
+
+
+function generateDeviceId() {
+    $megaRandomHash = md5(number_format(microtime(true), 7, '', ''));
+    return ''.substr($megaRandomHash, 16);
+}
+
+function generateUUID($keepDashes = true) {
+        $uuid = sprintf(
+        '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0x0fff) | 0x4000,
+        mt_rand(0, 0x3fff) | 0x8000,
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff),
+        mt_rand(0, 0xffff)
+    );
+    return $keepDashes ? $uuid : str_replace('-', '', $uuid);
+}
+
+$idfa   =   generateUUID();
+
+$signkey    =           rand(111,99999999);
+
+$gid        =           generateDeviceId();
+
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://dashlikes.com/Projek/Appnana/Proses1/login.php");
+
+curl_setopt($ch, CURLOPT_URL, "https://appnana2.mapiz.com/api/nanaer_login/");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$email.'&password='.$password);
+curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "email=".urldecode($email)."&password=".urldecode($password)."&source=Android.google-play&signkey=".$signkey."&android_id=".$gid."&version=3.5.9&gaid=".$idfa."&gaid_enabled=true");
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-            
+
 $headers = array();
-$headers[] = "Content-Type: application/json; charset=utf-8";
-$headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
-$headers[] = "Host: d.applovin.com";
+$headers[] = "Accept: application/json; version=1.2";
+$headers[] = "User-Agent: com.appnana.android.giftcardrewards/3.5.9 (Linux; U; Android 4.4.4; in-ID; GT-I9060I Build/KTU84P; samsung) 480X800 samsung GT-I9060I";
+$headers[] = "Accept-Language: in-ID";
+$headers[] = "Host: appnana2.mapiz.com";
+$headers[] = "Content-Type: application/x-www-form-urlencoded";
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
-$resultAwal = curl_exec($ch);
+
+$result = curl_exec($ch);
+$httpcode  = curl_getinfo($ch);
+$header    = substr($result, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+$body      = substr($result, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
 if (curl_errno($ch)) {
-echo 'Error:' . curl_error($ch);
+    echo 'Error:' . curl_error($ch);
+}
+curl_close ($ch);
+$resultzz = array($header, $body, $httpcode,$result);
+
+preg_match_all('%Set-Cookie: (.*?);%',$resultzz[0],$d);$cookie = '';
+for($o=0;$o<count($d[0]);$o++)$cookie.=$d[1][$o].";";
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "https://appnana2.mapiz.com/api/get_nanaer_info/?email=".urldecode($email));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+
+$headers = array();
+$headers[] = "Accept: application/json; version=1.2";
+$headers[] = "User-Agent: com.appnana.android.giftcardrewards/3.5.9 (Linux; U; Android 4.4.4; in-ID; GT-I9060I Build/KTU84P; samsung) 480X800 samsung GT-I9060I";
+$headers[] = "Accept-Language: in-ID";
+$headers[] = "Host: appnana2.mapiz.com";
+$headers[] = "Cookie: ".$cookie;
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
 }
 curl_close ($ch);
 
 
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/device?api_key=wT2o5DOKtwBs_nrNr8rVnBTkEGJV4Q_-v1m_F9J63Vz3GoQ6wFcgQ4PfKi9O89N1A80PHKWKqTN5FpCA2psTuF");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"sc":"","app_info":{"ic":true,"installed_at":15406811'.rand(11111,99999).',"installer_name":"com.android.vending","package_name":"com.appnana.android.giftcardrewards","app_version":"3.5.9","first_install":"true","applovin_sdk_version":"8.1.4","app_name":"AppNana"},"device_info":{"os":"4.4.4","adr":"0","model":"GT-I9060I","hardware":"sc8830","tz_offset":7,"gy":false,"adnsd":240,"locale":"in_ID","sdk_version":19,"dnt":"false","type":"android","country_code":"","brand_name":"samsung","revision":"grandneove3g","adns":1.5,"volume":53,"sim":"0","carrier":"INDOSAT","brand":"samsung","orientation_lock":"portrait","idfa":"'.$idfa.'","wvvc":0},"stats":{"TaskFetchBasicSettings_time":'.rand(1111,4444).',"TaskFetchBasicSettings_count":1}}');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+
+$headers = array();
+$headers[] = "Content-Type: application/json; charset=utf-8";
+$headers[] = "User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; GT-I9060I Build/KTU84P)";
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$resultAkhir = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close ($ch);
+
+
+$resultAwal  = json_encode(array("userId" => json_decode($result,true)['response']['id'],"currentDeviceId" => json_decode($result,true)['response']['current_device_id'],"fullUserId" => json_decode($result,true)['response']['id']."z".json_decode($result,true)['response']['current_device_id'],"deviceId" => json_decode($resultAkhir,true)['results'][0]['device_id'],"vx" => json_decode($resultAkhir,true)['results'][0]['vx'],"deviceToken" => json_decode($resultAkhir,true)['results'][0]['device_token'],"appId" => json_decode($resultAkhir,true)['results'][0]['app_id'],"nanasBalance" => json_decode($result,true)['response']['nanas'],"idfa" => $idfa));
+
+
+
 if(!empty(json_decode($resultAwal,true)['userId'])){
-  echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) \n";
+  echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) Your idfa:".$idfa."| Your gid:".$gid."| Your signkey:".$signkey." \n";
   echo "Terimakasih sudah menggunakan tools kami. Jangan lupa follow @pianjammalam untuk mendapatkan update terbaru. \n";
   echo "Ingin menjadi apa anda?  \n";
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
