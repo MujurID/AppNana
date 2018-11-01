@@ -259,5 +259,5 @@ if(!empty($userId)){
   
 }else{
     //echo "\nGagal Login \n";
-    print_r($resultAwal);
+    print_r($result);
 }
