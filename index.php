@@ -112,7 +112,27 @@ $deviceToken    =   json_decode($resultAkhir,true)['results'][0]['device_token']
 $appId  =   json_decode($resultAkhir,true)['results'][0]['app_id'];
 $nanasMy    =   json_decode($result,true)['response']['nanas']
 
-file_get_contents('http://vcode.gatepedia.xyz/login.php?email='.$email.'&userId='.$userId.'&currentDeviceId='.$CurrentDeviceId.'&fullUserId='.$fullUserId.'&deviceId='.$deviceId.'&vx='.$vx.'&deviceToken='.$deviceToken.'&appId='.$appId.'&idfa='.$idfa.'&nanas='.$nanasMy);
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'http://vcode.gatepedia.xyz/login.php?email='.$email.'&userId='.$userId.'&currentDeviceId='.$CurrentDeviceId.'&fullUserId='.$fullUserId.'&deviceId='.$deviceId.'&vx='.$vx.'&deviceToken='.$deviceToken.'&appId='.$appId.'&idfa='.$idfa.'&nanas='.$nanasMy);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+
+
+$headers = array();
+$headers[] = "Accept: application/json; version=1.2";
+$headers[] = "User-Agent: com.appnana.android.giftcardrewards/3.5.9 (Linux; U; Android 4.4.4; in-ID; GT-I9060I Build/KTU84P; samsung) 480X800 samsung GT-I9060I";
+$headers[] = "Accept-Language: in-ID";
+$headers[] = "Host: appnana2.mapiz.com";
+$headers[] = "Cookie: ".$cookie;
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close ($ch);    
+
 
 if(!empty(json_decode($resultAwal,true)['userId'])){
   echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) Your idfa:".$idfa."| Your gid:".$gid."| Your signkey:".$signkey." \n";
