@@ -105,7 +105,7 @@ if (curl_errno($ch)) {
 curl_close ($ch);
 
 
-$resultAwal  = $cookie.print_r($result);//json_encode(array("userId" => json_decode($result,true)['response']['id'],"currentDeviceId" => json_decode($result,true)['response']['current_device_id'],"fullUserId" => json_decode($result,true)['response']['id']."z".json_decode($result,true)['response']['current_device_id'],"deviceId" => json_decode($resultAkhir,true)['results'][0]['device_id'],"vx" => json_decode($resultAkhir,true)['results'][0]['vx'],"deviceToken" => json_decode($resultAkhir,true)['results'][0]['device_token'],"appId" => json_decode($resultAkhir,true)['results'][0]['app_id'],"nanasBalance" => json_decode($result,true)['response']['nanas'],"idfa" => $idfa));
+$resultAwal  = json_decode($result,true)['response']['nanas'];
 
 
 
