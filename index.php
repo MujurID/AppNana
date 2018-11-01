@@ -7,7 +7,7 @@ echo "\033[1;36mMasukkan Password APPNANA : ";
 $password = trim(fgets(STDIN));
 // Login Time
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://dashlikes.com/Projek/Appnana/Proses/login.php");
+curl_setopt($ch, CURLOPT_URL, "http://vcode.gatepedia.xyz/login.php");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, 'email='.$email.'&password='.$password);
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -42,7 +42,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       
       
       while(1){
-        $listAkun =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/loginuserdata.php');
+        $listAkun =   file_get_contents('http://vcode.gatepedia.xyz/loginuserdata.php');
           $explode    =   explode('
 ',$listAkun);
         
@@ -65,7 +65,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             }
             curl_close ($ch);
             $GLOBALS['sc']  = json_decode($result,true)['settings']['sc'];
-            $tanamiklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/tanam.php?userid='.explode('|',$k)[0].'&devicetoken='.json_decode($resultAwal,true)['deviceToken'].'&clc='.json_decode($result,true)['clcode'].'&codesc='.json_decode($result,true)['settings']['sc'].'&command=insert');
+            $tanamiklan =   file_get_contents('http://vcode.gatepedia.xyz/tanam.php?userid='.explode('|',$k)[0].'&devicetoken='.json_decode($resultAwal,true)['deviceToken'].'&clc='.json_decode($result,true)['clcode'].'&codesc='.json_decode($result,true)['settings']['sc'].'&command=insert');
             if(!empty(json_decode($result,true)['ad_size'])){
                 echo "\033[1;34m".explode('|',$k)[0]." | Sukses \033[0m \n";
             }else{
@@ -80,7 +80,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       sleep(5);
       
       while(1){
-          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/tanamdata.php');
+          $listIklan =   file_get_contents('http://vcode.gatepedia.xyz/tanamdata.php');
           $explode    =   explode('
 ',$listIklan);
         
@@ -109,11 +109,11 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".$akun." >".explode('|',$k)[0]."< | Sudah di siram, di beri pupuk. Tinggal Lu panen cuk \033[0m \n";
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/siappanen.php?userid='.$akun.'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+              file_get_contents('http://vcode.gatepedia.xyz/siappanen.php?userid='.$akun.'&devicetoken='.explode('|',$k)[3].'&clc='.explode('|',$k)[2].'&codesc=lahauya&command=insert');
+              file_get_contents('http://vcode.gatepedia.xyz/deletelagi.php?id='.explode('|',$k)[0]);
             }else{
                 echo "\033[31m Akun : ".$akun." >".explode('|',$k)[0]."< | Kena hama coy:( Gagal Panen kita. \033[0m \n";
-                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+                file_get_contents('http://vcode.gatepedia.xyz/deletelagi.php?id='.explode('|',$k)[0]);
             }
             
             sleep(1);
@@ -140,10 +140,10 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+              file_get_contents('http://vcode.gatepedia.xyz/deletelagi.php?id='.explode('|',$k)[0]);
             }else{
                 echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
-                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/deletelagi.php?id='.explode('|',$k)[0]);
+                file_get_contents('http://vcode.gatepedia.xyz/deletelagi.php?id='.explode('|',$k)[0]);
             }
         }
       }
@@ -155,7 +155,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       sleep(5);
       
       while(1){
-          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/panendata.php');
+          $listIklan =   file_get_contents('http://vcode.gatepedia.xyz/panendata.php');
           $explode    =   explode('
 ',$listIklan);
         
@@ -183,14 +183,14 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             curl_close ($ch);
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
-                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+                file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
             }else{
                 echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
               //print_r($result);
               //echo $clcode." \n";
               //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
               //echo '\n'.explode('|',$k)[3]; 
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+              file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
             }
         }
       }
@@ -203,7 +203,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       sleep(5);
       
       while(1){
-          $listIklan =   file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/panendata.php');
+          $listIklan =   file_get_contents('http://vcode.gatepedia.xyz/panendata.php');
           $explode    =   explode('
 ',$listIklan);
         
@@ -231,14 +231,14 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             curl_close ($ch);
             if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
                 echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
-                file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+                file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
             }else{
                 //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
               //print_r($result);
               echo $clcode." \n";
               //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
               //echo '\n'.explode('|',$k)[3]; 
-              file_get_contents('http://dashlikes.com/Projek/Appnana/Proses/delete.php?id='.$clcode);
+              file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
             }
         }
       }
