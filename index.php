@@ -1,11 +1,9 @@
 <?php
-
 echo "\033[31m*Script ini dibuat oleh Alfian Ananda Putra (@pianjammalam) pada tanggal 3 November 2018. \n";
 echo "\033[31m*Tidak di perbolehkan untuk mengedit atau menulis ulang kode atau pun diperjual belikan! \n \n";
 echo "\033[1;36mMasukkan Data APPNANA : ";
 $data = '{"userId":28128972,"currentDeviceId":26411281,"fullUserId":"28128972z26411281","deviceId":"10b86467c2dadf003d","vx":"1e89c69ab45abdfb","deviceToken":"MaznYs97JTiqaqEwnZGZ5g9Pz9jLmvt3VdE-hRvFGE2N3C4br_34EMwxlwBM-SDNGdcZKksc4hmVTv-XwPONVg5QhXMPj_B9OvmPo2Y9SknPZy6FTjC8LpNYMojR4aYRwVp8lD048zvUAE7M-VvHYZzwBp4DnM-iWwCrAWcmjYM=","appId":"1e89c69ab45abdfb","nanasBalance":10425,"idfa":"37e6b995-1405-4026-bf9f-d36a31c6aa6f"}';//trim(fgets(STDIN));
 $dataJson = json_decode($data,true);
-
 if(!empty($dataJson['userId'])){
     
   echo "\nAkun Anda ".$dataJson['userId']." | Balance \033[1;33m ".$dataJson['nanasBalance']."\033[0m  \n";
@@ -38,7 +36,6 @@ if(!empty($dataJson['userId'])){
                 echo "\033[1;34m >".$dataJson['userId']."<  Alhamdulillah kita berhasil nanem :') \033[0m \n";
                 
                 $ch = curl_init();
-
                 curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/vr?device_token=".$dataJson['deviceToken']);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clc.'","user_id":"'.$dataJson['userId'].'","zone_id":"inter_videoa_direct"}');
@@ -62,7 +59,6 @@ if(!empty($dataJson['userId'])){
                     sleep(1);
                     
                     $ch = curl_init();
-
                     curl_setopt($ch, CURLOPT_URL, "https://d.applovin.com/cr?device_token=".$dataJson['deviceToken']);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clcode":"'.$clc.'","fire_percent":-1,"zone_id":"inter_videoa_direct","result":"accepted","params":{"amount":"5.000000","currency":"Nanas"},"user_id":"'.$dataJson['userId'].'"}');
@@ -93,7 +89,8 @@ if(!empty($dataJson['userId'])){
                 }
             
             }else{
-                echo "\033[31m".$clc." | Gagal \033[0m \n";
+                //echo "\033[31m".$clc." | Gagal \033[0m \n";
+                print_r($result);
             }
         
       }
