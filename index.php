@@ -3,7 +3,7 @@
 echo "\033[31m*Script ini dibuat oleh Alfian Ananda Putra (@pianjammalam) pada tanggal 3 November 2018. \n";
 echo "\033[31m*Tidak di perbolehkan untuk mengedit atau menulis ulang kode atau pun diperjual belikan! \n \n";
 echo "\033[1;36mMasukkan Data APPNANA : ";
-$data = trim(fgets(STDIN));
+$data = '{"userId":28128972,"currentDeviceId":26411281,"fullUserId":"28128972z26411281","deviceId":"10b86467c2dadf003d","vx":"1e89c69ab45abdfb","deviceToken":"MaznYs97JTiqaqEwnZGZ5g9Pz9jLmvt3VdE-hRvFGE2N3C4br_34EMwxlwBM-SDNGdcZKksc4hmVTv-XwPONVg5QhXMPj_B9OvmPo2Y9SknPZy6FTjC8LpNYMojR4aYRwVp8lD048zvUAE7M-VvHYZzwBp4DnM-iWwCrAWcmjYM=","appId":"1e89c69ab45abdfb","nanasBalance":10425,"idfa":"37e6b995-1405-4026-bf9f-d36a31c6aa6f"}';//trim(fgets(STDIN));
 $dataJson = json_decode($data,true);
 
 if(!empty($dataJson['userId'])){
